@@ -1,0 +1,27 @@
+{
+  "name": "revise-nodejs",
+  "version": "1.0.0",
+  "description": "revise nodejs crud",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --inspect index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PhamNgocSonTech/Revise-Nodejs.git"
+  },
+  "author": "NgocSon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PhamNgocSonTech/Revise-Nodejs/issues"
+  },
+  "homepage": "https://github.com/PhamNgocSonTech/Revise-Nodejs#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.4"
+  }
+}
