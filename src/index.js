@@ -8,6 +8,12 @@ const path = require("path");
 app.use(express.static(path.join(__dirname, "public")));
 // HTTP Logger
 // app.use(morgan("combined"));
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
+app.use(express.json());
 
 //template engine
 app.engine(
@@ -32,6 +38,9 @@ app.get("/search", (req, res) => {
   res.render("search");
 });
 
+app.post("/search", (req, res) => {
+  res.send(req.body);
+});
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
 });
