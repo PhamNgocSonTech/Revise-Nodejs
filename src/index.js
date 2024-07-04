@@ -4,6 +4,8 @@ const port = 3000;
 const morgan = require("morgan");
 const { engine } = require("express-handlebars");
 const path = require("path");
+const newsRoute = require("./routes/NewsRoute.js");
+const siteRoute = require("./routes/SiteRoute.js");
 
 app.use(express.static(path.join(__dirname, "public")));
 // HTTP Logger
@@ -25,22 +27,10 @@ app.engine(
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "./views"));
 
-app.get("/", (req, res) => {
-  res.render("home");
-});
+// Routes
+app.use("/api", newsRoute);
+app.use("/", siteRoute);
 
-app.get("/news", (req, res) => {
-  console.log(req.query.valueSearch);
-  res.render("news");
-});
-
-app.get("/search", (req, res) => {
-  res.render("search");
-});
-
-app.post("/search", (req, res) => {
-  res.send(req.body);
-});
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
 });
