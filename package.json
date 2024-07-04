@@ -8,11 +8,17 @@
     "watch": "node-sass --watch src/scss/ --output src/public/css/",
     "watch:css": "postcss --watch src/input.css -o src/public/css/app.css",
     "build:css": "postcss  src/public/css/tailwind.css -o src/public/css/app.css",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "format:check": "prettier --check .",
+    "lint:write": "lint-staged",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PhamNgocSonTech/Revise-Nodejs.git"
+  },
+  "lint-staged": {
+    "src/**/*.{js,json,scss}": "prettier --write ."
   },
   "author": "NgocSon",
   "license": "ISC",
@@ -26,8 +32,11 @@
     "handlebars": "^4.7.8"
   },
   "devDependencies": {
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.7",
     "morgan": "^1.10.0",
     "node-sass": "^9.0.0",
-    "nodemon": "^3.1.4"
+    "nodemon": "^3.1.4",
+    "prettier": "^3.3.2"
   }
 }
