@@ -1,12 +1,12 @@
 const Homepage = (req, res) => {
-    res.render('home')
-}
+    res.render('home');
+};
 
 const Search = (req, res) => {
-    res.render('search')
-}
+    res.render('search');
+};
 
 module.exports = {
     Homepage,
     Search,
-}
+};
