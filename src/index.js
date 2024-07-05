@@ -37,8 +37,8 @@ app.set('views', path.join(__dirname, './views'));
 
 // Routes
 app.use('/api', newsRoute);
-app.use('/courses/', siteRoute);
 app.use('/', siteRoute);
+// app.use('/courses/', siteRoute);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);

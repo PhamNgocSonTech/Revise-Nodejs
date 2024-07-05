@@ -9,6 +9,7 @@
         "watch:css": "postcss --watch src/input.css -o src/public/css/app.css",
         "build:css": "postcss  src/public/css/tailwind.css -o src/public/css/app.css",
         "format:check": "prettier --check .",
+        "format:fix": "prettier --write .",
         "lint:write": "lint-staged",
         "test": "echo \"Error: no test specified\" && exit 1",
         "prepare": "husky"
