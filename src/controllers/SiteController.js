@@ -12,7 +12,7 @@ const getCourse = async (req, res) => {
 
 const Homepage = async (req, res) => {
     try {
-        const courses = await CourseModel.find({}).lean();
+        const courses = await CourseModel.find().lean();
         // const dataCourses = courses.map((course) => course.toObject());
         res.render('home', { courses });
         // return res.status(200).json(data);

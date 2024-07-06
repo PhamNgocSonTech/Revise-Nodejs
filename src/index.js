@@ -6,6 +6,7 @@ const { engine } = require('express-handlebars');
 const path = require('path');
 const newsRoute = require('./routes/NewsRoute.js');
 const siteRoute = require('./routes/SiteRoute.js');
+const courseRoute = require('./routes/CourseRoute.js');
 
 // Init Static File
 app.use(express.static(path.join(__dirname, 'public')));
@@ -38,7 +39,7 @@ app.set('views', path.join(__dirname, './views'));
 // Routes
 app.use('/api', newsRoute);
 app.use('/', siteRoute);
-// app.use('/courses/', siteRoute);
+app.use('/courses/', courseRoute);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);

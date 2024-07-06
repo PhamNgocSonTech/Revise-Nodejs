@@ -12,7 +12,8 @@
         "format:fix": "prettier --write .",
         "lint:write": "lint-staged",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "prepare": "husky"
+        "prepare": "husky",
+        "commit": "cz"
     },
     "repository": {
         "type": "git",

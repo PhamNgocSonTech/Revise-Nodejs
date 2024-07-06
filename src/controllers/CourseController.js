@@ -1,12 +1,16 @@
 const CourseModel = require('../models/Course');
 
-const getCourse = async (req, res) => {
+// [GET] /courses/:slug
+const getDetailCourse = async (req, res) => {
     try {
-        const data = await CourseModel.find();
-        return res.status(200).json(data);
+        const course = await CourseModel.findOne({
+            slug: req.params.slug,
+        }).lean();
+        res.render('courses/show', { course: course });
+        // return res.status(200).json(course);
     } catch (error) {
         res.status(404).json(error);
     }
 };
 
-module.exports = { getCourse };
+module.exports = { getDetailCourse };
