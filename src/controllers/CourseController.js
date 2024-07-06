@@ -13,4 +13,14 @@ const getDetailCourse = async (req, res) => {
     }
 };
 
-module.exports = { getDetailCourse };
+// GET
+const createCourse = (req, res) => {
+    res.render('courses/create');
+};
+
+// POST
+const storeCourse = (req, res) => {
+    res.send('store course');
+};
+
+module.exports = { getDetailCourse, createCourse, storeCourse };
