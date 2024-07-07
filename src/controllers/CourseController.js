@@ -20,7 +20,15 @@ const createCourse = (req, res) => {
 
 // POST
 const storeCourse = (req, res) => {
-    res.send('store course');
+    try {
+        const dataImg = req.body;
+        dataImg.img = `https://img.youtube.com/vi/${req.body.videoId}/sddefault.jpg`;
+        const course = new CourseModel(dataImg);
+        course.save();
+        res.redirect('/');
+    } catch (error) {
+        res.status(404).json(error);
+    }
 };
 
 module.exports = { getDetailCourse, createCourse, storeCourse };

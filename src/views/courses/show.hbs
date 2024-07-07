@@ -10,11 +10,14 @@
     <div class="grid grid-rows-3 grid-flow-col gap-4 p-4">
   <div class="row-span-3 p-4 ">
     <iframe width="560" height="315" src="https://www.youtube.com/embed/{{course.videoId}}?si=BtB230yhST3bUVQw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    <h1 class="flex justify-center">{{course.name}}</h1>
+    <h1 class="flex justify-center italic">{{course.name}}</h1>
   </div>
   <div class="row-span-2 p-4 ">
-    <h1 class="text-base font-bold">About this course</h1>
+    <h1 class="text-base font-bold">About this course:</h1>
     <span>{{course.desc}}</span>
+    <h1 class="text-base font-bold">Level: <span class="text-sky-400">{{course.level}}</span> </h1>
+    
+
   </div>
   <div class="col-span-1 p-4 flex justify-center">
     {{!-- <button class="bg-blue-500 text-white px-5 py-2 rounded">Learning</button> --}}

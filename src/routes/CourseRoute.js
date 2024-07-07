@@ -7,8 +7,8 @@ const {
     storeCourse,
 } = require('../controllers/CourseController');
 
-router.get('/create', createCourse);
 router.post('/store', storeCourse);
+router.get('/create', createCourse);
 router.get('/:slug', getDetailCourse);
 router.get('/news', News);
 
