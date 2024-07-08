@@ -18,6 +18,17 @@ const createCourse = (req, res) => {
     res.render('courses/create');
 };
 
+//
+
+const editCourse = async (req, res) => {
+    try {
+        const course = await CourseModel.findById(req.params.id).lean();
+        res.render('courses/edit', { course: course });
+    } catch (error) {
+        res.status(404).json(error);
+    }
+};
+
 // POST
 const storeCourse = (req, res) => {
     try {
@@ -31,4 +42,4 @@ const storeCourse = (req, res) => {
     }
 };
 
-module.exports = { getDetailCourse, createCourse, storeCourse };
+module.exports = { getDetailCourse, createCourse, editCourse, storeCourse };
