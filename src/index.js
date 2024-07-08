@@ -8,6 +8,7 @@ const newsRoute = require('./routes/NewsRoute.js');
 const siteRoute = require('./routes/SiteRoute.js');
 const courseRoute = require('./routes/CourseRoute.js');
 const meRoute = require('./routes/MeRoute.js');
+const methodOverride = require('method-override');
 
 // Init Static File
 app.use(express.static(path.join(__dirname, 'public')));
@@ -26,9 +27,9 @@ app.use(
 );
 
 app.use(express.json());
+app.use(methodOverride('_method'));
 
 //template engine
-
 const hbs = create({
     defaultLayout: 'main',
     extname: '.hbs',

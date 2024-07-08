@@ -29,6 +29,18 @@ const editCourse = async (req, res) => {
     }
 };
 
+//PUT
+const updateCourse = async (req, res) => {
+    try {
+        // const course = await CourseModel.findById(req.params.id).lean();
+        // res.render('courses/edit', { course: course });
+        await CourseModel.updateOne({ _id: req.params.id }, req.body);
+        res.redirect('/me/stored/courses');
+    } catch (error) {
+        res.status(404).json(error);
+    }
+};
+
 // POST
 const storeCourse = (req, res) => {
     try {
@@ -42,4 +54,10 @@ const storeCourse = (req, res) => {
     }
 };
 
-module.exports = { getDetailCourse, createCourse, editCourse, storeCourse };
+module.exports = {
+    getDetailCourse,
+    createCourse,
+    editCourse,
+    storeCourse,
+    updateCourse,
+};
