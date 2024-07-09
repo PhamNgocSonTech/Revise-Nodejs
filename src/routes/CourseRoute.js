@@ -12,8 +12,8 @@ const {
 router.post('/store', storeCourse);
 router.get('/create', createCourse);
 router.get('/:slug', getDetailCourse);
-router.get('/:id/edit', editCourse);
 router.put('/:id', updateCourse);
+router.get('/:id/edit', editCourse);
 // router.get('/news', News);
 
 module.exports = router;

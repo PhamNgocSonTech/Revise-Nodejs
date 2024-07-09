@@ -32,9 +32,22 @@ const editCourse = async (req, res) => {
 //PUT
 const updateCourse = async (req, res) => {
     try {
-        // const course = await CourseModel.findById(req.params.id).lean();
-        // res.render('courses/edit', { course: course });
-        await CourseModel.updateOne({ _id: req.params.id }, req.body);
+        const { name, desc, videoId, level } = req.body;
+        // await CourseModel.updateOne({ _id: req.params.id }, req.body);
+        // res.redirect('/me/stored/courses');
+        // const course = await CourseModel.findById(req.params.id);
+        const dataCourse = {
+            name,
+            desc,
+            videoId,
+            level,
+            img: `https://img.youtube.com/vi/${videoId}/sddefault.jpg`,
+        };
+        const course = await CourseModel.findByIdAndUpdate(
+            req.params.id,
+            dataCourse
+        );
+        await course.save();
         res.redirect('/me/stored/courses');
     } catch (error) {
         res.status(404).json(error);
