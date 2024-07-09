@@ -7,13 +7,15 @@ const {
     storeCourse,
     editCourse,
     updateCourse,
+    deleteCourse,
 } = require('../controllers/CourseController');
 
-router.post('/store', storeCourse);
 router.get('/create', createCourse);
-router.get('/:slug', getDetailCourse);
-router.put('/:id', updateCourse);
+router.post('/store', storeCourse);
 router.get('/:id/edit', editCourse);
+router.put('/:id', updateCourse);
+router.delete('/:id', deleteCourse);
+router.get('/:slug', getDetailCourse);
 // router.get('/news', News);
 
 module.exports = router;

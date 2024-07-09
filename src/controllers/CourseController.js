@@ -54,6 +54,16 @@ const updateCourse = async (req, res) => {
     }
 };
 
+// DELETE
+const deleteCourse = async (req, res) => {
+    try {
+        await CourseModel.deleteOne({ _id: req.params.id });
+        res.redirect('back');
+    } catch (error) {
+        res.status(404).json(error);
+    }
+};
+
 // POST
 const storeCourse = (req, res) => {
     try {
@@ -73,4 +83,5 @@ module.exports = {
     editCourse,
     storeCourse,
     updateCourse,
+    deleteCourse,
 };
