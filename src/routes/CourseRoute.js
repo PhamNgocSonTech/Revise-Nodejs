@@ -8,12 +8,14 @@ const {
     editCourse,
     updateCourse,
     deleteCourse,
+    restoreCourse,
 } = require('../controllers/CourseController');
 
 router.get('/create', createCourse);
 router.post('/store', storeCourse);
 router.get('/:id/edit', editCourse);
 router.put('/:id', updateCourse);
+router.patch('/:id/restore', restoreCourse);
 router.delete('/:id', deleteCourse);
 router.get('/:slug', getDetailCourse);
 // router.get('/news', News);

@@ -77,6 +77,16 @@ const storeCourse = (req, res) => {
     }
 };
 
+//PATCH
+const restoreCourse = async (req, res) => {
+    try {
+        await CourseModel.restore({ _id: req.params.id });
+        res.redirect('back');
+    } catch (error) {
+        res.status(404).json(error);
+    }
+};
+
 module.exports = {
     getDetailCourse,
     createCourse,
@@ -84,4 +94,5 @@ module.exports = {
     storeCourse,
     updateCourse,
     deleteCourse,
+    restoreCourse,
 };

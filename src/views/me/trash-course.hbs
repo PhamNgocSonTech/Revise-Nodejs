@@ -1,8 +1,8 @@
 <!-- component -->
 <div class="mt-4">
     <div>
-        <h2>My Courses</h2>
-        <a class="text-[#E53A40] hover:underline" href="/me/trash/courses">Recycle Bin</a>
+        <a class="text-[#03a6ff] hover:underline" href="/me/stored/courses">Back to My Courses</a>
+        <h2>Courses Deleted</h2>
     </div>
 <table class="border-collapse w-full">
     <thead>
@@ -35,14 +35,14 @@
             </td>
             <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
                 <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Actions</span>
-                <a href="/courses/{{this._id}}/edit" class="text-blue-400 hover:text-blue-600">Edit</a>
-                <a href="#" id="btn-remove" class="text-blue-400 hover:text-blue-600 pl-6" onclick="openModal('modelConfirm')" data-id="{{this._id}}">Remove</a>
+                <a href="" class="btn-restore text-blue-400 hover:text-blue-600" data-id="{{this._id}}">Restore</a>
+                <a href="" class="btn-force-delete text-blue-400 hover:text-blue-600 pl-6" onclick="openModal('modelConfirm')" data-id="{{this._id}}">Force Delete</a>
             </td>
         </tr>
         {{else}}
         <tr>
             <td colspan="5" class="text-center">
-                You don't have courses. <a class="text-[#79bd9a] hover:underline" href="/courses/create">Create new course</a>
+                Recyle bin empty. <a class="text-[#79bd9a] hover:underline" href="/me/stored/courses">List your courses</a>
             </td>
         </tr>
         {{/each}}
@@ -91,12 +91,17 @@
 
 {{!-- Hidden Delete Form --}}
   <form name="delete-course-form" method="POST"></form>
+{{!-- Hidden Restore Form --}}
+  <form name="restore-course-form" method="POST"></form>
 
 <script type="text/javascript">
-    let btnRemove = document.querySelector('#btn-remove')
-    let courseId = btnRemove.getAttribute('data-id')
+    let btnRemove = document.querySelector('#btn-force-delete')
     let btnDeleteCourse = document.querySelector('#btn-delete-course')
     let deleteCourseForm = document.forms['delete-course-form'];
+    let restoreCourseForm = document.forms['restore-course-form'];
+    let btnRestore = document.querySelectorAll('.btn-restore')
+
+
 
     window.openModal = function(modalId) {
         event.preventDefault();
@@ -122,11 +127,11 @@
     };
 
     //solve 1: Get id course from DOM
-    window.confirmDelete = function() {
-        deleteCourseForm.action = `/courses/${courseId}?_method=Delete`
-        deleteCourseForm.submit()
+    /*window.confirmRestore = function() {
+        // deleteCourseForm.action = `/courses/${courseId}?_method=Delete`
+        // deleteCourseForm.submit()
 
-    }
+    }*/
 
     //solve 2
         /*document.addEventListener("DOMContentLoaded", function(){
@@ -137,10 +142,42 @@
         }   
         })*/
     btnDeleteCourse.addEventListener('click', function() {
-            deleteCourseForm.action = `/courses/${courseId}?_method=Delete`
+            let courseId = btnRemove.getAttribute('data-id')
+            deleteCourseForm.action = `/courses/${courseId}?_method=DELETE`
             deleteCourseForm.submit()
+            console.log(courseId)
+
     })
+
+    //Restore Course'
+    /*
+    document.addEventListener('DOMContentLoaded', function() {
+        let restoreBtn = document.getElementById(`btn-restore`);
+        if (!restoreBtn) {
+            console.log(`Element with ID btn-restore not found, breaking the loop.`);
+            break; // Dừng vòng lặp nếu không tìm thấy phần tử
+        }
+        console.log(`Adding event listener to btn-restore`);
+        restoreBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log("Click");
+        });
+})*/
+    document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('btn-restore')) {
+                e.preventDefault();
+            let restoreId = e.target.getAttribute('data-id')
+                restoreCourseForm.action = `/courses/${restoreId}/restore?_method=patch`
+                restoreCourseForm.submit()
+            }
+    });
+});
+       /* restoreBtn.click = function (e) {
+            e.preventDefault()
+            console.log("Click")
+        }*/
+
             
     
 </script>
-  
