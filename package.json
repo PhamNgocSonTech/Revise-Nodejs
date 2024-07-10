@@ -34,6 +34,7 @@
         "handlebars": "^4.7.8",
         "method-override": "^3.0.0",
         "mongoose": "^8.4.4",
+        "mongoose-delete": "^1.0.2",
         "mongoose-slug-updater": "^3.3.0"
     },
     "devDependencies": {

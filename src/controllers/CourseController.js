@@ -57,7 +57,7 @@ const updateCourse = async (req, res) => {
 // DELETE
 const deleteCourse = async (req, res) => {
     try {
-        await CourseModel.deleteOne({ _id: req.params.id });
+        await CourseModel.delete({ _id: req.params.id });
         res.redirect('back');
     } catch (error) {
         res.status(404).json(error);
