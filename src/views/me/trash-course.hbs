@@ -99,9 +99,6 @@
     let btnDeleteCourse = document.querySelector('#btn-delete-course')
     let deleteCourseForm = document.forms['delete-course-form'];
     let restoreCourseForm = document.forms['restore-course-form'];
-    let btnRestore = document.querySelectorAll('.btn-restore')
-
-
 
     window.openModal = function(modalId) {
         event.preventDefault();
@@ -126,6 +123,19 @@
         }
     };
 
+
+    //Restore Course
+        document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('click', function(e) {
+                if (e.target && e.target.classList.contains('btn-restore')) {
+                    e.preventDefault();
+                let restoreId = e.target.getAttribute('data-id')
+                    restoreCourseForm.action = `/courses/${restoreId}/restore?_method=Patch`
+                    restoreCourseForm.submit()
+                }
+            });
+        });
+
     //solve 1: Get id course from DOM
     /*window.confirmRestore = function() {
         // deleteCourseForm.action = `/courses/${courseId}?_method=Delete`
@@ -141,15 +151,8 @@
             console.log(courseId)
         }   
         })*/
-    btnDeleteCourse.addEventListener('click', function() {
-            let courseId = btnRemove.getAttribute('data-id')
-            deleteCourseForm.action = `/courses/${courseId}?_method=DELETE`
-            deleteCourseForm.submit()
-            console.log(courseId)
 
-    })
-
-    //Restore Course'
+    //Restore Course
     /*
     document.addEventListener('DOMContentLoaded', function() {
         let restoreBtn = document.getElementById(`btn-restore`);
@@ -163,16 +166,7 @@
             console.log("Click");
         });
 })*/
-    document.addEventListener('DOMContentLoaded', function() {
-        document.addEventListener('click', function(e) {
-            if (e.target && e.target.classList.contains('btn-restore')) {
-                e.preventDefault();
-            let restoreId = e.target.getAttribute('data-id')
-                restoreCourseForm.action = `/courses/${restoreId}/restore?_method=patch`
-                restoreCourseForm.submit()
-            }
-    });
-});
+
        /* restoreBtn.click = function (e) {
             e.preventDefault()
             console.log("Click")
