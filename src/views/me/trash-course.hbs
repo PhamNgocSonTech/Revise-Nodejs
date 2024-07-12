@@ -100,6 +100,18 @@
     let deleteCourseForm = document.forms['delete-course-form'];
     let restoreCourseForm = document.forms['restore-course-form'];
 
+    //Restore Course
+    document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('btn-restore')) {
+                e.preventDefault();
+                let restoreId = e.target.getAttribute('data-id')
+                restoreCourseForm.action = `/courses/${restoreId}/restore?_method=Patch`
+                restoreCourseForm.submit()
+            }
+        });
+    });   
+    
     window.openModal = function(modalId) {
         event.preventDefault();
         document.getElementById(modalId).style.display = 'block'
@@ -121,57 +133,5 @@
                 i.style.display = 'none'
             })
         }
-    };
-
-
-    //Restore Course
-        document.addEventListener('DOMContentLoaded', function() {
-            document.addEventListener('click', function(e) {
-                if (e.target && e.target.classList.contains('btn-restore')) {
-                    e.preventDefault();
-                let restoreId = e.target.getAttribute('data-id')
-                    restoreCourseForm.action = `/courses/${restoreId}/restore?_method=Patch`
-                    restoreCourseForm.submit()
-                }
-            });
-        });
-
-    //solve 1: Get id course from DOM
-    /*window.confirmRestore = function() {
-        // deleteCourseForm.action = `/courses/${courseId}?_method=Delete`
-        // deleteCourseForm.submit()
-
-    }*/
-
-    //solve 2
-        /*document.addEventListener("DOMContentLoaded", function(){
-        btnDeleteCourse.onclick= function() {
-            deleteCourseForm.action = `/courses/${courseId}?_method=Delete`
-            deleteCourseForm.submit()
-            console.log(courseId)
-        }   
-        })*/
-
-    //Restore Course
-    /*
-    document.addEventListener('DOMContentLoaded', function() {
-        let restoreBtn = document.getElementById(`btn-restore`);
-        if (!restoreBtn) {
-            console.log(`Element with ID btn-restore not found, breaking the loop.`);
-            break; // Dừng vòng lặp nếu không tìm thấy phần tử
-        }
-        console.log(`Adding event listener to btn-restore`);
-        restoreBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            console.log("Click");
-        });
-})*/
-
-       /* restoreBtn.click = function (e) {
-            e.preventDefault()
-            console.log("Click")
-        }*/
-
-            
-    
+    }; 
 </script>
