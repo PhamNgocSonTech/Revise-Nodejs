@@ -1,8 +1,26 @@
-<div class="mt-4">
-    <div>
+<div class="ml-3 my-6">
+     <div>
         <h2>My Courses</h2>
         <a class="text-[#E53A40] hover:underline" href="/me/trash/courses">Recycle Bin ({{countCourse}} Course Deleted)</a>
     </div>
+</div>
+<div class="flex items-center space-x-2 my-8 ml-2">
+  <label class="flex items-center" for="checkbox-all">
+    <input class="mr-2" id="checkbox-all" type="checkbox">
+    Chọn tất cả
+  </label>
+  <select class="border rounded p-1 w-40">
+    <option>Select Action</option>
+    <option>Delete</option>
+    <option>Delete All</option>
+  </select>
+  <button class="bg-teal-500 text-white rounded px-4 py-2 hover:bg-teal-600" disabled>
+    Thực hiện
+  </button>
+</div>
+
+
+
 <table class="border-collapse w-full">
     <thead>
         <tr>
@@ -16,22 +34,27 @@
     <tbody>
         {{#each courses}}
         <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-             <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+                <input class="mr-2" id="courseItemCheckbox" name="courseIds[]" type="checkbox" value="{{this._id}}">
                 <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Number</span>
                 {{sum @index 1}}
             </td>
+
             <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
                 <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Course Name</span>
                 {{this.name}}
             </td>
+
             <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
                 <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Level</span>
                 {{this.level}}
             </td>
-          <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+
+            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
                 <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Status Create</span>
                 <span class="rounded bg-green-400 py-1 px-3 text-xs font-bold">{{this.createdAt}}</span>
             </td>
+
             <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
                 <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Actions</span>
                 <a href="/courses/{{this._id}}/edit" class="text-blue-400 hover:text-blue-600">Edit</a>
@@ -92,6 +115,21 @@
   <form name="delete-course-form" method="POST"></form>
 
 <script type="text/javascript">
+
+      document.addEventListener('DOMContentLoaded', function() {
+        let checkboxAll = document.querySelector('#checkbox-all')
+        let courseItemCheckboxes = document.querySelectorAll('#courseItemCheckbox')
+        checkboxAll.addEventListener('change', function() {
+            let isCheckedAll = this.checked
+                courseItemCheckboxes.forEach(function(checkbox) {
+                        checkbox.checked = isCheckedAll
+            })
+                
+        })
+        
+    })
+
+
       document.addEventListener('DOMContentLoaded', function() {
             let removeBtns = document.querySelectorAll('.btn-remove');
             //let courseId = removeBtn.getAttribute('data-id')
