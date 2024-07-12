@@ -2,8 +2,11 @@ const CourseModel = require('../models/Course');
 
 const storeCourse = async (req, res) => {
     try {
+        const countCourse = await CourseModel.countDocumentsWithDeleted({
+            deleted: true,
+        });
         const courses = await CourseModel.find({}).lean();
-        res.render('me/store-course', { courses });
+        res.render('me/store-course', { courses, countCourse });
     } catch (error) {
         res.status(404).json(error);
     }
