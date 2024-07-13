@@ -10,11 +10,13 @@ const {
     deleteCourse,
     restoreCourse,
     handleFormActions,
+    handleFormActionsTrash,
 } = require('../controllers/CourseController');
 
 router.get('/create', createCourse);
 router.post('/store', storeCourse);
 router.post('/handle-form-action', handleFormActions);
+router.post('/handle-form-action-trash', handleFormActionsTrash);
 router.get('/:id/edit', editCourse);
 router.put('/:id', updateCourse);
 router.patch('/:id/restore', restoreCourse);

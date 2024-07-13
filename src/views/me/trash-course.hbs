@@ -1,59 +1,74 @@
-<!-- component -->
-<div class="mt-4">
+<div class="my-6">
     <div>
-        <a class="text-[#03a6ff] hover:underline" href="/me/stored/courses">Back to My Courses</a>
         <h2>Courses Deleted</h2>
+        <a class="text-[#E53A40] hover:underline" href="/me/stored/courses">Back to My Courses</a>
     </div>
-<table class="border-collapse w-full">
-    <thead>
-        <tr>
-            <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Number</th>
-            <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Courses Name</th>
-            <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Level</th>
-            <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Status</th>
-            <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {{#each courses}}
-        <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-             <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
-                <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Number</span>
-                {{sum @index 1}}
-            </td>
-            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
-                <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Course Name</span>
-                {{this.name}}
-            </td>
-            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
-                <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Level</span>
-                {{this.level}}
-            </td>
-          <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
-                <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Status Deleted</span>
-                <span class="rounded bg-green-400 py-1 px-3 text-xs font-bold">{{this.deletedAt}}</span>
-            </td>
-            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
-                <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Actions</span>
-                <a href="" class="btn-restore text-blue-400 hover:text-blue-600" data-id="{{this._id}}">Restore</a>
-                <a href="" class="btn-force-delete text-blue-400 hover:text-blue-600 pl-6" onclick="openModal('modelConfirm')" data-id="{{this._id}}">Force Delete</a>
-            </td>
-        </tr>
-        {{else}}
-        <tr>
-            <td colspan="5" class="text-center">
-                Recyle bin empty. <a class="text-[#79bd9a] hover:underline" href="/me/stored/courses">List your courses</a>
-            </td>
-        </tr>
-        {{/each}}
-       
-    </tbody>
-</table>
+
+    <form name="containerForm" method="post" action="/courses/handle-form-action-trash">
+        <div class="flex items-center space-x-2 my-8 ml-2" name="containerForm" method="post" action="/courses/handle-form-action">
+            <label class="flex items-center" for="checkbox-all">
+                <input class="mr-2" id="checkbox-all" type="checkbox">
+                Select all
+            </label>
+            <select class="border rounded p-1 w-40" name="formAction" required>
+                <option value="">Select Action</option>
+                <option>Restore</option>
+                <option>Delete</option>
+            </select>
+            <button class="btn-check-all-submit bg-teal-500 text-white rounded px-4 py-2 hover:bg-teal-600 disabled:bg-teal-500 disabled:opacity-25" disabled>
+                Apply
+            </button>
+        </div>
+        <table class="border-collapse w-full">
+            <thead>
+                <tr>
+                    <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Number</th>
+                    <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Courses Name</th>
+                    <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Level</th>
+                    <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Status</th>
+                    <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each courses}}
+                <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                    <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+                        <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Number</span>
+                        {{sum @index 1}}
+                    </td>
+                    <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                        <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Course Name</span>
+                        {{this.name}}
+                    </td>
+                    <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+                        <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Level</span>
+                        {{this.level}}
+                    </td>
+                <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+                        <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Status Deleted</span>
+                        <span class="rounded bg-green-400 py-1 px-3 text-xs font-bold">{{this.deletedAt}}</span>
+                    </td>
+                    <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+                        <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Actions</span>
+                        <a href="" class="btn-restore text-blue-400 hover:text-blue-600" data-id="{{this._id}}">Restore</a>
+                        <a href="" class="btn-force-delete text-blue-400 hover:text-blue-600 pl-6" onclick="openModal('modelConfirm')" data-id="{{this._id}}">Force Delete</a>
+                    </td>
+                </tr>
+                {{else}}
+                <tr>
+                    <td colspan="5" class="text-center">
+                        Recyle bin empty. <a class="text-[#79bd9a] hover:underline" href="/me/stored/courses">List your courses</a>
+                    </td>
+                </tr>
+                {{/each}}
+            
+            </tbody>
+        </table>
+    </form>
 </div>
 
 
 {{!-- CONFIRM DELETE --}}
-
 <div id="modelConfirm" class="fixed hidden z-50 inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full px-4 ">
     <div class="relative top-40 mx-auto shadow-xl rounded-md bg-white max-w-md">
 
@@ -95,13 +110,14 @@
   <form name="restore-course-form" method="POST"></form>
 
 <script type="text/javascript">
-    let btnRemove = document.querySelector('#btn-force-delete')
-    let btnDeleteCourse = document.querySelector('#btn-delete-course')
-    let deleteCourseForm = document.forms['delete-course-form'];
-    let restoreCourseForm = document.forms['restore-course-form'];
-
-    //Restore Course
+   
     document.addEventListener('DOMContentLoaded', function() {
+        let btnRemove = document.querySelector('#btn-force-delete')
+        let btnDeleteCourse = document.querySelector('#btn-delete-course')
+        let deleteCourseForm = document.forms['delete-course-form'];
+        let restoreCourseForm = document.forms['restore-course-form'];
+
+        //Restore Course
         document.addEventListener('click', function(e) {
             if (e.target && e.target.classList.contains('btn-restore')) {
                 e.preventDefault();

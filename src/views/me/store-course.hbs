@@ -5,74 +5,75 @@
     </div>
 </div>
 
-<form class="flex items-center space-x-2 my-8 ml-2" name="containerForm" method="post" action="/courses/handle-form-action">
-  <label class="flex items-center" for="checkbox-all">
-    <input class="mr-2" name="courseIds[]" id="checkbox-all" type="checkbox" value="{{courses._id}}">
-    Chọn tất cả
-  </label>
-  <select class="border rounded p-1 w-40" name="action">
-    <option>Select Action</option>
-    <option>Delete</option>
-    <option>Delete All</option>
-  </select>
-  <button class="btn-check-all-submit bg-teal-500 text-white rounded px-4 py-2 hover:bg-teal-600 disabled:bg-teal-500 disabled:opacity-25" disabled>
-    Thực hiện
-  </button>
+<form name="containerForm" method="post" action="/courses/handle-form-action">
+    <div class="flex items-center space-x-2 my-8 ml-2" name="containerForm" method="post" action="/courses/handle-form-action">
+    <label class="flex items-center" for="checkbox-all">
+        <input class="mr-2" id="checkbox-all" type="checkbox">
+        Select all
+    </label>
+    <select class="border rounded p-1 w-40" name="formAction" required>
+        <option value="">Select Action</option>
+        <option>Delete</option>
+        <option>Delete All</option>
+    </select>
+    <button class="btn-check-all-submit bg-teal-500 text-white rounded px-4 py-2 hover:bg-teal-600 disabled:bg-teal-500 disabled:opacity-25" disabled>
+        Apply
+    </button>
+    </div>
+
+
+    <table class="border-collapse w-full">
+        <thead>
+            <tr>
+                <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Number</th>
+                <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Courses Name</th>
+                <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Level</th>
+                <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Status</th>
+                <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each courses}}
+            <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+                    <input class="mr-2" id="courseItemCheckbox" name="courseIds[]" type="checkbox" value="{{this._id}}">
+                    <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Number</span>
+                    {{sum @index 1}}
+                </td>
+
+                <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                    <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Course Name</span>
+                    {{this.name}}
+                </td>
+
+                <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+                    <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Level</span>
+                    {{this.level}}
+                </td>
+
+                <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+                    <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Status Create</span>
+                    <span class="rounded bg-green-400 py-1 px-3 text-xs font-bold">{{this.createdAt}}</span>
+                </td>
+
+                <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+                    <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Actions</span>
+                    <a href="/courses/{{this._id}}/edit" class="text-blue-400 hover:text-blue-600">Edit</a>
+                    <a href="#" class="btn-remove text-blue-400 hover:text-blue-600 pl-6" onclick="openModal('modelConfirm')" data-id="{{this._id}}">Remove</a>
+                </td>
+            </tr>
+            {{else}}
+            <tr>
+                <td colspan="5" class="text-center">
+                    You don't have courses. <a class="text-[#79bd9a] hover:underline" href="/courses/create">Create new course</a>
+                </td>
+            </tr>
+            {{/each}}
+        
+        </tbody>
+    </table>
 </form>
 
-
-
-<table class="border-collapse w-full">
-    <thead>
-        <tr>
-            <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Number</th>
-            <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Courses Name</th>
-            <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Level</th>
-            <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Status</th>
-            <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {{#each courses}}
-        <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
-                <input class="mr-2" id="courseItemCheckbox" name="courseIds[]" type="checkbox" value="{{this._id}}">
-                <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Number</span>
-                {{sum @index 1}}
-            </td>
-
-            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
-                <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Course Name</span>
-                {{this.name}}
-            </td>
-
-            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
-                <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Level</span>
-                {{this.level}}
-            </td>
-
-            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
-                <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Status Create</span>
-                <span class="rounded bg-green-400 py-1 px-3 text-xs font-bold">{{this.createdAt}}</span>
-            </td>
-
-            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
-                <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Actions</span>
-                <a href="/courses/{{this._id}}/edit" class="text-blue-400 hover:text-blue-600">Edit</a>
-                <a href="#" class="btn-remove text-blue-400 hover:text-blue-600 pl-6" onclick="openModal('modelConfirm')" data-id="{{this._id}}">Remove</a>
-            </td>
-        </tr>
-        {{else}}
-        <tr>
-            <td colspan="5" class="text-center">
-                You don't have courses. <a class="text-[#79bd9a] hover:underline" href="/courses/create">Create new course</a>
-            </td>
-        </tr>
-        {{/each}}
-       
-    </tbody>
-</table>
-</div>
 
 
 {{!-- CONFIRM DELETE --}}
@@ -113,7 +114,7 @@
 </div>
 
 {{!-- Hidden Delete Form --}}
-  <form name="delete-course-form" method="POST"></form>
+<form name="delete-course-form" method="POST"></form>
 
 <script type="text/javascript">
     
@@ -129,6 +130,8 @@
                 courseItemCheckboxes.forEach(function(checkbox) {
                     checkbox.checked = isCheckedAll
             })
+            renderCheckAllSubmitBtn()
+
                 
         })
 
@@ -136,7 +139,6 @@
             // Course item checkbox
             checkbox.addEventListener('change', function() {
             renderCheckAllSubmitBtn()
-
                 let isCheckedAll = true;
                     for(let i = 0; i < courseItemCheckboxes.length; i++) {
                         if(!courseItemCheckboxes[i].checked) {
@@ -146,14 +148,23 @@
                     }
                 checkboxAll.checked = isCheckedAll
             })
+
         })
 
         btnCheckAllSubmit.addEventListener('click', function() {
+            //e.preventDefault();
             let isSubmittable = !btnCheckAllSubmit.disabled
-            if(isSubmittable) {
+            if(!isSubmittable) {
                 containerForm.submit()
             }
         })
+
+        /*btnCheckAllSubmit.addEventListener('submit', function(e) {
+            let isSubmittable = !btnCheckAllSubmit.disabled
+            if(!isSubmittable) {
+                e.preventDefault()
+            }
+        })*/
 
         //Re-render check all submit button
         function renderCheckAllSubmitBtn() {
@@ -162,12 +173,10 @@
                 btnCheckAllSubmit.disabled = false
             } else {
                 btnCheckAllSubmit.disabled = true
-
             }
         }
         
     })
-
 
       document.addEventListener('DOMContentLoaded', function() {
             let removeBtns = document.querySelectorAll('.btn-remove');

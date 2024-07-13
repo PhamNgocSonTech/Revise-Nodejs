@@ -88,11 +88,26 @@ const restoreCourse = async (req, res) => {
 };
 
 const handleFormActions = async (req, res) => {
-    try {
-        res.json(req.body);
-    } catch (error) {
-        res.status(404).json(error);
+    switch (req.body.formAction) {
+        case 'Delete':
+            await CourseModel.delete({ _id: { $in: req.body.courseIds } });
+            res.redirect('back');
+            break;
+        default:
+            res.json({ msg: 'Invalid action' });
     }
+};
+
+const handleFormActionsTrash = async (req, res) => {
+    // switch (req.body.formAction) {
+    //     case 'Delete':
+    //         await CourseModel.delete({ _id: { $in: req.body.courseIds } });
+    //         res.redirect('back');
+    //         break;
+    //     default:
+    //         res.json({ msg: 'Invalid action' });
+    // }
+    res.json(req.body);
 };
 
 module.exports = {
@@ -104,4 +119,5 @@ module.exports = {
     deleteCourse,
     restoreCourse,
     handleFormActions,
+    handleFormActionsTrash,
 };
