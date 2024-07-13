@@ -4,20 +4,21 @@
         <a class="text-[#E53A40] hover:underline" href="/me/trash/courses">Recycle Bin ({{countCourse}} Course Deleted)</a>
     </div>
 </div>
-<div class="flex items-center space-x-2 my-8 ml-2">
+
+<form class="flex items-center space-x-2 my-8 ml-2" name="containerForm" method="post" action="/courses/handle-form-action">
   <label class="flex items-center" for="checkbox-all">
-    <input class="mr-2" id="checkbox-all" type="checkbox">
+    <input class="mr-2" name="courseIds[]" id="checkbox-all" type="checkbox" value="{{courses._id}}">
     Chọn tất cả
   </label>
-  <select class="border rounded p-1 w-40">
+  <select class="border rounded p-1 w-40" name="action">
     <option>Select Action</option>
     <option>Delete</option>
     <option>Delete All</option>
   </select>
-  <button class="bg-teal-500 text-white rounded px-4 py-2 hover:bg-teal-600" disabled>
+  <button class="btn-check-all-submit bg-teal-500 text-white rounded px-4 py-2 hover:bg-teal-600 disabled:bg-teal-500 disabled:opacity-25" disabled>
     Thực hiện
   </button>
-</div>
+</form>
 
 
 
@@ -115,17 +116,55 @@
   <form name="delete-course-form" method="POST"></form>
 
 <script type="text/javascript">
-
+    
       document.addEventListener('DOMContentLoaded', function() {
         let checkboxAll = document.querySelector('#checkbox-all')
-        let courseItemCheckboxes = document.querySelectorAll('#courseItemCheckbox')
+        let courseItemCheckboxes = document.querySelectorAll('input[name="courseIds[]"]')
+        let btnCheckAllSubmit = document.querySelector('.btn-check-all-submit')
+        let containerForm = document.forms['container-form']
+
+        // Checkbox all changed
         checkboxAll.addEventListener('change', function() {
             let isCheckedAll = this.checked
                 courseItemCheckboxes.forEach(function(checkbox) {
-                        checkbox.checked = isCheckedAll
+                    checkbox.checked = isCheckedAll
             })
                 
         })
+
+        courseItemCheckboxes.forEach(function(checkbox) {
+            // Course item checkbox
+            checkbox.addEventListener('change', function() {
+            renderCheckAllSubmitBtn()
+
+                let isCheckedAll = true;
+                    for(let i = 0; i < courseItemCheckboxes.length; i++) {
+                        if(!courseItemCheckboxes[i].checked) {
+                            isCheckedAll = false;
+                            break;
+                        }
+                    }
+                checkboxAll.checked = isCheckedAll
+            })
+        })
+
+        btnCheckAllSubmit.addEventListener('click', function() {
+            let isSubmittable = !btnCheckAllSubmit.disabled
+            if(isSubmittable) {
+                containerForm.submit()
+            }
+        })
+
+        //Re-render check all submit button
+        function renderCheckAllSubmitBtn() {
+            let checkedCount = document.querySelectorAll('input[name="courseIds[]"]:checked').length
+            if(checkedCount > 0) {
+                btnCheckAllSubmit.disabled = false
+            } else {
+                btnCheckAllSubmit.disabled = true
+
+            }
+        }
         
     })
 

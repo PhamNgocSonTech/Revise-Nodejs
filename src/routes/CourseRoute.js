@@ -9,10 +9,12 @@ const {
     updateCourse,
     deleteCourse,
     restoreCourse,
+    handleFormActions,
 } = require('../controllers/CourseController');
 
 router.get('/create', createCourse);
 router.post('/store', storeCourse);
+router.post('/handle-form-action', handleFormActions);
 router.get('/:id/edit', editCourse);
 router.put('/:id', updateCourse);
 router.patch('/:id/restore', restoreCourse);

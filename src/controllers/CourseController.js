@@ -87,6 +87,14 @@ const restoreCourse = async (req, res) => {
     }
 };
 
+const handleFormActions = async (req, res) => {
+    try {
+        res.json(req.body);
+    } catch (error) {
+        res.status(404).json(error);
+    }
+};
+
 module.exports = {
     getDetailCourse,
     createCourse,
@@ -95,4 +103,5 @@ module.exports = {
     updateCourse,
     deleteCourse,
     restoreCourse,
+    handleFormActions,
 };
