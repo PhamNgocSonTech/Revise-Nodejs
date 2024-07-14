@@ -99,16 +99,32 @@ const handleFormActions = async (req, res) => {
 };
 
 const handleFormActionsTrash = async (req, res) => {
-    // switch (req.body.formAction) {
-    //     case 'Delete':
-    //         await CourseModel.delete({ _id: { $in: req.body.courseIds } });
-    //         res.redirect('back');
-    //         break;
-    //     default:
-    //         res.json({ msg: 'Invalid action' });
-    // }
-    res.json(req.body);
+    switch (req.body.formAction) {
+        case 'Restore':
+            await CourseModel.restore({ _id: { $in: req.body.courseIds } });
+            res.redirect('back');
+            break;
+        case 'Force Delete':
+            await CourseModel.deleteMany({ _id: { $in: req.body.courseIds } });
+            res.redirect('back');
+            break;
+        default:
+            res.json({ msg: 'Invalid action' });
+    }
 };
+
+// const forceDeleteCourse = async (req, res) => {
+//     // switch (req.body.formAction) {
+//     //     case 'Delete':
+//     //         await CourseModel.delete({ _id: { $in: req.body.courseIds } });
+//     //         res.redirect('back');
+//     //         break;
+//     //     default:
+//     //         res.json({ msg: 'Invalid action' });
+//     // }
+
+//     res.json(req.body)
+// }
 
 module.exports = {
     getDetailCourse,
@@ -120,4 +136,5 @@ module.exports = {
     restoreCourse,
     handleFormActions,
     handleFormActionsTrash,
+    // forceDeleteCourse,
 };

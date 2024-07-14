@@ -4,8 +4,8 @@
         <a class="text-[#E53A40] hover:underline" href="/me/stored/courses">Back to My Courses</a>
     </div>
 
-    <form name="containerForm" method="post" action="/courses/handle-form-action-trash">
-        <div class="flex items-center space-x-2 my-8 ml-2" name="containerForm" method="post" action="/courses/handle-form-action">
+    <form name="container-form" method="post" action="/courses/handle-form-action-trash">
+        <div class="flex items-center space-x-2 my-8 ml-2">
             <label class="flex items-center" for="checkbox-all">
                 <input class="mr-2" id="checkbox-all" type="checkbox">
                 Select all
@@ -13,9 +13,9 @@
             <select class="border rounded p-1 w-40" name="formAction" required>
                 <option value="">Select Action</option>
                 <option>Restore</option>
-                <option>Delete</option>
+                <option>Force Delete</option>
             </select>
-            <button class="btn-check-all-submit bg-teal-500 text-white rounded px-4 py-2 hover:bg-teal-600 disabled:bg-teal-500 disabled:opacity-25" disabled>
+            <button class="btn-apply bg-teal-500 text-white rounded px-4 py-2 hover:bg-teal-600 disabled:bg-teal-500 disabled:opacity-25" disabled>
                 Apply
             </button>
         </div>
@@ -33,6 +33,7 @@
                 {{#each courses}}
                 <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
                     <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+                        <input class="mr-2" id="courseItemCheckbox" name="courseIds[]" type="checkbox" value="{{this._id}}">
                         <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Number</span>
                         {{sum @index 1}}
                     </td>
@@ -112,12 +113,46 @@
 <script type="text/javascript">
    
     document.addEventListener('DOMContentLoaded', function() {
-        let btnRemove = document.querySelector('#btn-force-delete')
-        let btnDeleteCourse = document.querySelector('#btn-delete-course')
-        let deleteCourseForm = document.forms['delete-course-form'];
+        let removeBtns = document.querySelectorAll('.btn-force-delete')
+        let delBtn = document.querySelector('#btn-delete-course')
+        let delCourseForm = document.forms['delete-course-form'];
         let restoreCourseForm = document.forms['restore-course-form'];
 
-        //Restore Course
+
+        let checkboxAll = document.querySelector('#checkbox-all')
+        let courseItemsCheck = document.querySelectorAll('input[name="courseIds[]"]')
+        let containerForm = document.forms['container-form']
+        let btnApply=  document.querySelector('.btn-apply')
+
+
+           
+        //Checkbox all changed
+        checkboxAll.addEventListener('change', function() {
+            let isCheckedAll = this.checked;
+            courseItemsCheck.forEach(function(courseCheckbox){
+                courseCheckbox.checked = isCheckedAll
+            })
+            renderApplyBtn()
+        })
+
+        // Course item checkbox
+        courseItemsCheck.forEach(function(courseCheckbox) {
+            courseCheckbox.addEventListener('change', function() {
+                let isCheckedAll = this.checked;
+                for(let i = 0; i < courseItemsCheck.length; i++) {
+                    if(!courseItemsCheck[i].checked) {
+                        isCheckedAll = false;
+                        break;
+                    }
+                }
+                checkboxAll.checked = isCheckedAll;
+                renderApplyBtn()
+            })
+
+        })
+
+
+        //Restore Course Event
         document.addEventListener('click', function(e) {
             if (e.target && e.target.classList.contains('btn-restore')) {
                 e.preventDefault();
@@ -126,6 +161,39 @@
                 restoreCourseForm.submit()
             }
         });
+
+         //Force Delete
+            //let courseId = removeBtn.getAttribute('data-id')
+        removeBtns.forEach(function(btn){
+            btn.addEventListener('click', function() {
+                let courseId = btn.getAttribute('data-id')
+                        delBtn.addEventListener('click', function(e) {
+                            //e.preventDefault();
+                        delCourseForm.action = `/courses/${courseId}?_method=Delete`
+                        delCourseForm.submit();
+                    })
+                });
+            })
+
+        btnApply.addEventListener('click', function() {
+            let isSubmittable = !btnApply.disabled;
+            if(!isSubmittable) {
+                containerForm.submit()
+            }
+        })
+
+        //Show button when checkbox is checked
+        function renderApplyBtn() {
+            let checkedCount = document.querySelectorAll('input[name="courseIds[]"]:checked').length
+            if(checkedCount > 0) { 
+                btnApply.disabled = false;
+            }else{
+                btnApply.disabled = true;
+
+            }
+        }
+
+        
     });   
     
     window.openModal = function(modalId) {

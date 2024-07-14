@@ -5,8 +5,8 @@
     </div>
 </div>
 
-<form name="containerForm" method="post" action="/courses/handle-form-action">
-    <div class="flex items-center space-x-2 my-8 ml-2" name="containerForm" method="post" action="/courses/handle-form-action">
+<form name="container-form" method="post" action="/courses/handle-form-action">
+    <div class="flex items-center space-x-2 my-8 ml-2">
     <label class="flex items-center" for="checkbox-all">
         <input class="mr-2" id="checkbox-all" type="checkbox">
         Select all
@@ -14,9 +14,8 @@
     <select class="border rounded p-1 w-40" name="formAction" required>
         <option value="">Select Action</option>
         <option>Delete</option>
-        <option>Delete All</option>
     </select>
-    <button class="btn-check-all-submit bg-teal-500 text-white rounded px-4 py-2 hover:bg-teal-600 disabled:bg-teal-500 disabled:opacity-25" disabled>
+    <button class="btn-apply bg-teal-500 text-white rounded px-4 py-2 hover:bg-teal-600 disabled:bg-teal-500 disabled:opacity-25" disabled>
         Apply
     </button>
     </div>
@@ -59,7 +58,7 @@
                 <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
                     <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Actions</span>
                     <a href="/courses/{{this._id}}/edit" class="text-blue-400 hover:text-blue-600">Edit</a>
-                    <a href="#" class="btn-remove text-blue-400 hover:text-blue-600 pl-6" onclick="openModal('modelConfirm')" data-id="{{this._id}}">Remove</a>
+                    <a href="#" class="btn-remove text-blue-400 hover:text-blue-600 pl-6" onclick="openModal('modelConfirm')" data-id="{{this._id}}">Delete</a>
                 </td>
             </tr>
             {{else}}
@@ -120,28 +119,28 @@
     
       document.addEventListener('DOMContentLoaded', function() {
         let checkboxAll = document.querySelector('#checkbox-all')
-        let courseItemCheckboxes = document.querySelectorAll('input[name="courseIds[]"]')
-        let btnCheckAllSubmit = document.querySelector('.btn-check-all-submit')
+        let courseItemsCheck = document.querySelectorAll('input[name="courseIds[]"]')
+        let btnApply = document.querySelector('.btn-apply')
         let containerForm = document.forms['container-form']
 
         // Checkbox all changed
         checkboxAll.addEventListener('change', function() {
             let isCheckedAll = this.checked
-                courseItemCheckboxes.forEach(function(checkbox) {
+                courseItemsCheck.forEach(function(checkbox) {
                     checkbox.checked = isCheckedAll
             })
-            renderCheckAllSubmitBtn()
+            renderApplyBtn()
 
                 
         })
-
-        courseItemCheckboxes.forEach(function(checkbox) {
-            // Course item checkbox
+        
+        // Course item checkbox
+        courseItemsCheck.forEach(function(checkbox) {
             checkbox.addEventListener('change', function() {
-            renderCheckAllSubmitBtn()
+            renderApplyBtn()
                 let isCheckedAll = true;
-                    for(let i = 0; i < courseItemCheckboxes.length; i++) {
-                        if(!courseItemCheckboxes[i].checked) {
+                    for(let i = 0; i < courseItemsCheck.length; i++) {
+                        if(!courseItemsCheck[i].checked) {
                             isCheckedAll = false;
                             break;
                         }
@@ -151,10 +150,10 @@
 
         })
 
-        btnCheckAllSubmit.addEventListener('click', function() {
+        btnApply.addEventListener('click', function() {
             //e.preventDefault();
-            let isSubmittable = !btnCheckAllSubmit.disabled
-            if(!isSubmittable) {
+            let isSubmittable = !btnApply.disabled //false
+            if(!isSubmittable) { //!false = true
                 containerForm.submit()
             }
         })
@@ -166,36 +165,35 @@
             }
         })*/
 
-        //Re-render check all submit button
-        function renderCheckAllSubmitBtn() {
+        //Re-render apply button
+        function renderApplyBtn() {
             let checkedCount = document.querySelectorAll('input[name="courseIds[]"]:checked').length
             if(checkedCount > 0) {
-                btnCheckAllSubmit.disabled = false
+                btnApply.disabled = false
             } else {
-                btnCheckAllSubmit.disabled = true
+                btnApply.disabled = true
             }
         }
-        
     })
 
-      document.addEventListener('DOMContentLoaded', function() {
+      //document.addEventListener('DOMContentLoaded', function() {
             let removeBtns = document.querySelectorAll('.btn-remove');
             //let courseId = removeBtn.getAttribute('data-id')
             let delBtn = document.querySelector('.btn-delete-course')
-            let delForm = document.forms['delete-course-form'];
+            let delCourseForm = document.forms['delete-course-form'];
             removeBtns.forEach(function(btn){
                 btn.addEventListener('click', function() {
                 let courseId = btn.getAttribute('data-id')
                         delBtn.addEventListener('click', function(e) {
                             e.preventDefault();
-                        delForm.action = `/courses/${courseId}?_method=Delete`
-                        delForm.submit();
+                        delCourseForm.action = `/courses/${courseId}?_method=Delete`
+                        delCourseForm.submit();
                         console.log(courseId);
 
                     })
                 });
             })
-        });
+        //});
 
     window.openModal = function(modalId) {
         document.getElementById(modalId).style.display = 'block'

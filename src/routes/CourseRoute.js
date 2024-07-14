@@ -11,6 +11,7 @@ const {
     restoreCourse,
     handleFormActions,
     handleFormActionsTrash,
+    forceDeleteCourse,
 } = require('../controllers/CourseController');
 
 router.get('/create', createCourse);
@@ -20,6 +21,7 @@ router.post('/handle-form-action-trash', handleFormActionsTrash);
 router.get('/:id/edit', editCourse);
 router.put('/:id', updateCourse);
 router.patch('/:id/restore', restoreCourse);
+// router.delete('/:id/force-delete', forceDeleteCourse);
 router.delete('/:id', deleteCourse);
 router.get('/:slug', getDetailCourse);
 // router.get('/news', News);
