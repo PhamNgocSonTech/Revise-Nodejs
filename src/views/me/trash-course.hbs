@@ -124,8 +124,6 @@
         let containerForm = document.forms['container-form']
         let btnApply=  document.querySelector('.btn-apply')
 
-
-           
         //Checkbox all changed
         checkboxAll.addEventListener('change', function() {
             let isCheckedAll = this.checked;
@@ -175,12 +173,12 @@
                 });
             })
 
-        btnApply.addEventListener('click', function() {
-            let isSubmittable = !btnApply.disabled;
+        /*containerForm.addEventListener('submit', function(e) {
+            let isSubmittable = !btnApply.hasClass('disabled');
             if(!isSubmittable) {
-                containerForm.submit()
+                e.preventDefault()
             }
-        })
+        })*/
 
         //Show button when checkbox is checked
         function renderApplyBtn() {
