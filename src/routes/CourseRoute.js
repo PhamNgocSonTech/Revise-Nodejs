@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { News } = require('../controllers/NewsController');
+const { isAdmin } = require('../middleware/isAdmin');
 const {
     getDetailCourse,
     createCourse,
