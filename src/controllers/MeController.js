@@ -2,12 +2,16 @@ const CourseModel = require('../models/Course');
 
 const storeCourse = async (req, res) => {
     try {
-        res.json(res.locals._sort);
         const countCourse = await CourseModel.countDocumentsWithDeleted({
             deleted: true,
         });
-        const courses = await CourseModel.find({}).lean();
-        res.render('me/store-course', { courses, countCourse });
+        const courseQuery = await CourseModel.find({}).lean();
+        // if (req.query.hasOwnProperties('_sort')) {
+        //     courseQuery = courseQuery.sort({
+        //         [req.query.column]: req.query.types,
+        //     });
+        // }
+        res.render('me/store-course', { courses: courseQuery, countCourse });
     } catch (error) {
         res.status(404).json(error);
     }

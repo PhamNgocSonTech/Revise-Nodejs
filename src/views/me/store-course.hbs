@@ -20,14 +20,13 @@
     </button>
     </div>
 
-
     <table class="border-collapse w-full">
         <thead>
             <tr>
                 <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Number</th>
-                <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Courses Name <a href="?_sort&column=name&type=az"><i class="fa-solid fa-sort" style="color: #58c9b9;"></i></a></th>
-                <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Level</th>
-                <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Status</th>
+                <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Courses Name {{{sortable 'name'_sort}}}</th>
+                <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Level {{{sortable 'level'_sort}}}</th>
+                <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Status {{{sortable 'createdAt'_sort}}}</th>
                 <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Actions</th>
             </tr>
         </thead>

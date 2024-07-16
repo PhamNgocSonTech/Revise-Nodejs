@@ -36,6 +36,24 @@ const hbs = create({
     extname: '.hbs',
     helpers: {
         sum: (a, b) => a + b,
+        sortable: (field, sort) => {
+            const sortType = field === sort.column ? sort.type : 'default';
+            const icons = {
+                default: 'fa-solid fa-sort',
+                asc: 'fa-solid fa-arrow-up-wide-short',
+                desc: 'fa-solid fa-arrow-down-short-wide',
+            };
+            const types = {
+                default: 'desc',
+                asc: 'desc',
+                desc: 'asc',
+            };
+
+            const icon = icons[sortType];
+            const type = types[sortType];
+
+            return `<a href="?_sort&column=${field}&type=${type}"><i class="${icon}" style="color: #58c9b9;"></i></a>`;
+        },
     },
 });
 app.engine('hbs', hbs.engine);
