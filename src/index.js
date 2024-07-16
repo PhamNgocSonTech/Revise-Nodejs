@@ -9,6 +9,7 @@ const siteRoute = require('./routes/SiteRoute.js');
 const courseRoute = require('./routes/CourseRoute.js');
 const meRoute = require('./routes/MeRoute.js');
 const methodOverride = require('method-override');
+const { sortMiddleware } = require('./middleware/SortMiddleware.js');
 
 // Init Static File
 app.use(express.static(path.join(__dirname, 'public')));
@@ -40,6 +41,9 @@ const hbs = create({
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, './views'));
+
+// Custom Middleware
+app.use(sortMiddleware);
 
 // Routes
 app.use('/api', newsRoute);
