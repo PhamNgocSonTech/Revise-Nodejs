@@ -1,19 +1,19 @@
 const CourseModel = require('../models/Course');
 
-const storeCourse = async (req, res) => {
+const storeCourse = async (req, res, next) => {
     try {
+        let courses = await CourseModel.find().lean();
+        if (req.query.hasOwnProperty('_sort')) {
+            courses = await CourseModel.find()
+                .lean()
+                .sort({ [req.query.column]: req.query.type });
+        }
         const countCourse = await CourseModel.countDocumentsWithDeleted({
             deleted: true,
         });
-        const courseQuery = await CourseModel.find({}).lean();
-        // if (req.query.hasOwnProperties('_sort')) {
-        //     courseQuery = courseQuery.sort({
-        //         [req.query.column]: req.query.types,
-        //     });
-        // }
-        res.render('me/store-course', { courses: courseQuery, countCourse });
+        res.render('me/store-course', { courses, countCourse });
     } catch (error) {
-        res.status(404).json(error);
+        next(error);
     }
 };
 
