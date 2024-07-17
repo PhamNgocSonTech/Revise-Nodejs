@@ -9,7 +9,7 @@ const siteRoute = require('./routes/SiteRoute.js');
 const courseRoute = require('./routes/CourseRoute.js');
 const meRoute = require('./routes/MeRoute.js');
 const methodOverride = require('method-override');
-const { sortMiddleware } = require('./middleware/SortMiddleware.js');
+const { sortMiddleware } = require('./middleware/sortMiddleware.x.js');
 
 // Init Static File
 app.use(express.static(path.join(__dirname, 'public')));
