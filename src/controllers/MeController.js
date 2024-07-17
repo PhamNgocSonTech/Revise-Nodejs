@@ -2,12 +2,8 @@ const CourseModel = require('../models/Course');
 
 const storeCourse = async (req, res, next) => {
     try {
-        let courses = await CourseModel.find().lean();
-        if (req.query.hasOwnProperty('_sort')) {
-            courses = await CourseModel.find()
-                .lean()
-                .sort({ [req.query.column]: req.query.type });
-        }
+        let courses = await CourseModel.find().sortable(req).lean();
+
         const countCourse = await CourseModel.countDocumentsWithDeleted({
             deleted: true,
         });

@@ -41,8 +41,19 @@ const CourseSchema = new Schema(
     { timestamps: true }
 );
 
-// Add Plugins
-mongoose.plugin(slug);
+// Custom query helper
+(CourseSchema.query.sortable = function (req) {
+    if (req.query.hasOwnProperty('_sort')) {
+        const isValidTypes = ['asc', 'desc'].includes(req.query.type);
+        return this.sort({
+            [req.query.column]: isValidTypes ? req.query.type : 'desc',
+        });
+    }
+
+    return this;
+}),
+    // Add Plugins
+    mongoose.plugin(slug);
 CourseSchema.plugin(mongooseDelete, {
     overrideMethods: 'all',
     deletedAt: true,
